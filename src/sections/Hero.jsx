@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react'
 import './Hero.css'
 import photo from '../assets/photo.jpg'
 
-export default function Hero({ scrollY }) {
+export default function Hero({ scrollY, onResumeOpen }) {
   const nameRef = useRef(null)
   const [namePos, setNamePos] = useState(null)
 
@@ -78,7 +78,7 @@ export default function Hero({ scrollY }) {
 
           {/* This is the visible name that stays in flow */}
           <h1
-            className="hero__name hero__name--floating"
+            className="hero__name"
             ref={nameRef}
             style={{ opacity: 0, pointerEvents: 'none' }}
           >
@@ -95,15 +95,12 @@ export default function Hero({ scrollY }) {
           <div className="hero__cta" style={recedingStyle(0.05)}>
             <a href="#projects" className="btn btn-primary">View Projects</a>
             <a href="#contact"  className="btn btn-outline">Contact Me</a>
-            <a
-              href="/Shreyash_Tembhurne_Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
+            <button
               className="btn btn-outline"
-              download
+              onClick={onResumeOpen}
             >
               Resume ↓
-            </a>
+            </button>
           </div>
 
           <div className="hero__stats" style={recedingStyle(0.1)}>
