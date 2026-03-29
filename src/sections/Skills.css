@@ -1,0 +1,170 @@
+.skills__card {
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  overflow: visible;
+}
+
+.skills__rows {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Each row ── */
+.skill-row {
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.skill-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.skill-row__header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.skill-row__category {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skill-row__symbol {
+  font-size: 0.85rem;
+  color: var(--accent);
+  line-height: 1;
+  opacity: 0.9;
+  letter-spacing: 0;          /* reset — symbols don't need wide tracking */
+}
+
+.skill-row__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-border), transparent);
+}
+
+/* ── Skill items ── */
+.skill-row__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.6rem;
+}
+
+/* ── Flip card wrapper ── */
+.skill-flip {
+  display: inline-block;
+  position: relative;
+  height: 32px;
+  min-width: 72px;
+  perspective: 600px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.skill-flip:hover {
+  transform: scale(1.12);
+  z-index: 2;
+}
+
+/* Hidden sizer — gives the pill its natural text width */
+.skill-flip__sizer {
+  display: inline-block;
+  padding: 0 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  visibility: hidden;
+  pointer-events: none;
+  line-height: 32px;
+}
+
+/* Inner — overlays the sizer, handles the 3D flip */
+.skill-flip__inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.42s cubic-bezier(0.34, 1.4, 0.64, 1) 0.1s;
+}
+
+.skill-flip:hover .skill-flip__inner {
+  transform: rotateY(180deg);
+}
+
+/* Both faces fill the inner absolutely */
+.skill-flip__front,
+.skill-flip__back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.9rem;
+  white-space: nowrap;
+}
+
+/* Front — pill with name */
+.skill-flip__front {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+  box-shadow: inset 0 1px 0 rgba(245, 158, 11, 0.1);
+}
+
+/* Back — logo or initial, starts face-down */
+.skill-flip__back {
+  background: var(--bg-card-hover);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  transform: rotateY(180deg);
+  gap: 0.35rem;
+}
+
+.skill-flip__logo {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  object-fit: contain;
+  filter: brightness(0.95);
+}
+
+/* Fallback initial for skills without a logo */
+.skill-flip__initial {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .skill-row__items {
+    gap: 0.4rem;
+  }
+
+  .skill-flip {
+    height: 30px;
+  }
+
+  .skill-flip__front,
+  .skill-flip__back {
+    font-size: 0.72rem;
+    padding: 0 0.6rem;
+  }
+}
