@@ -168,3 +168,28 @@
     padding: 0 0.6rem;
   }
 }
+
+
+@media (max-width: 768px) {
+  .skill-row__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .skill-row__line {
+    width: 100%;
+  }
+
+  .skill-row__category {
+    font-size: 0.65rem;
+  }
+
+  .skill-row {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .skill-row__items {
+    gap: 0.25rem 1rem;
+  }
+}
