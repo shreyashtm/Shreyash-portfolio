@@ -57,6 +57,7 @@ export default function ResumeModal({ isOpen, onClose }) {
         </div>
 
         <div className="modal__body">
+            {isOpen && (
           <object
             data="/ShreyashTembhurneResume.pdf"
             type="application/pdf"
@@ -69,6 +70,7 @@ export default function ResumeModal({ isOpen, onClose }) {
               </a>
             </p>
           </object>
+            )}
         </div>
       </div>
     </div>
