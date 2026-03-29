@@ -116,8 +116,13 @@ export default function Hero({ scrollY }) {
 
         <div className="hero__photo-wrap" style={recedingStyle(0.05)}>
           <div className="hero__photo-placeholder">
-            <div className="hero__photo-initials">ST</div>
-            <div className="hero__photo-hint">Add photo.jpg to src/assets/</div>
+            {/* <div className="hero__photo-initials">ST</div>
+            <div className="hero__photo-hint">Add photo.jpg to src/assets/</div> */}
+            <img
+              src="/src/assets/photo.jpg"
+              alt="Shreyash Tembhurne"
+              className="hero__photo"
+            />
           </div>
           <div className="hero__photo-ring" />
         </div>
