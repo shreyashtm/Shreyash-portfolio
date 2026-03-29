@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import './Hero.css'
+import photo from '../assets/photo.jpg'
 
 export default function Hero({ scrollY }) {
   const nameRef = useRef(null)
@@ -119,7 +120,7 @@ export default function Hero({ scrollY }) {
             {/* <div className="hero__photo-initials">ST</div>
             <div className="hero__photo-hint">Add photo.jpg to src/assets/</div> */}
             <img
-              src="/src/assets/photo.jpg"
+              src={photo}
               alt="Shreyash Tembhurne"
               className="hero__photo"
             />
