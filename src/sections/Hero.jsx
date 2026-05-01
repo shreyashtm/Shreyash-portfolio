@@ -95,12 +95,12 @@ export default function Hero({ scrollY, onResumeOpen }) {
           <div className="hero__cta" style={recedingStyle(0.05)}>
             <a href="#projects" className="btn btn-primary">View Projects</a>
             <a href="#contact"  className="btn btn-outline">Contact Me</a>
-            <button
+            {/* <button
               className="btn btn-outline"
               onClick={onResumeOpen}
             >
               Resume ↓
-            </button>
+            </button> */}
           </div>
 
           <div className="hero__stats" style={recedingStyle(0.1)}>

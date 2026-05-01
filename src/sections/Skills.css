@@ -136,8 +136,9 @@
 }
 
 .skill-flip__logo {
-  width: 18px;
-  height: 18px;
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--accent);
   min-width: 18px;
   min-height: 18px;
   object-fit: contain;
