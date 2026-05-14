@@ -37,7 +37,7 @@ npm install --save-dev gh-pages
 
 Add to `package.json`:
 ```json
-"homepage": "https://shreyashtm.github.io/portfolio",
+"homepage": "https://shreyashtembhurne.vercel.app",
 "scripts": {
   "predeploy": "npm run build",
   "deploy": "gh-pages -d build"
