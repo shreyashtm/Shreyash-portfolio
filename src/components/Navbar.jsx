@@ -4,8 +4,8 @@ import './Navbar.css';
 const NAV_LINKS = [
   { label: 'About',      href: '#about',      index: '01' },
   { label: 'Skills',     href: '#skills',     index: '02' },
-  { label: 'Projects',   href: '#projects',   index: '03' },
-  { label: 'Experience', href: '#experience', index: '04' },
+  { label: 'Experience', href: '#experience', index: '03' },
+  { label: 'Projects',   href: '#projects',   index: '04' },
   { label: 'Contact',    href: '#contact',    index: '05' },
 ];
 

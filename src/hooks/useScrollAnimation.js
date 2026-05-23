@@ -35,8 +35,8 @@ export default function useScrollAnimation() {
         })
       },
       {
-        threshold: 0.3,
-        rootMargin: '-200px 0px -60px 0px'
+        threshold: 0.1,
+        rootMargin: '-40px 0px -50% 0px'
       }
     )
 

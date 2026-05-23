@@ -27,8 +27,8 @@ export default function App() {
         <Hero scrollY={scrollY} onResumeOpen={() => setResumeOpen(true)} />
         <About />
         <Skills />
-        <Projects />
         <Experience />
+        <Projects />
         <Contact />
       </main>
       <ResumeModal
