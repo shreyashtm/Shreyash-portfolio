@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
+import RetroBackground from './components/RetroBackground'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Skills from './sections/Skills'
@@ -20,6 +21,7 @@ export default function App() {
 
   return (
     <>
+      <RetroBackground />
       <Navbar scrollY={scrollY} />
       <main>
         <Hero scrollY={scrollY} onResumeOpen={() => setResumeOpen(true)} />

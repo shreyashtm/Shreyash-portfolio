@@ -34,8 +34,9 @@
   font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 800;
-  color: var(--accent);
+  color: var(--accent-hover);
   line-height: 1;
+  text-shadow: var(--heading-shadow);
 }
 
 .about__highlight-label {

@@ -30,8 +30,8 @@
 .skill-row__category {
   font-family: var(--font-body);
   font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-weight: 800;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--accent);
   white-space: nowrap;
@@ -46,13 +46,13 @@
   color: var(--accent);
   line-height: 1;
   opacity: 0.9;
-  letter-spacing: 0;          /* reset — symbols don't need wide tracking */
+  letter-spacing: 0;
 }
 
 .skill-row__line {
   flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent-border), transparent);
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--accent-border) 0 12px, transparent 12px 20px);
 }
 
 /* ── Skill items ── */
@@ -108,7 +108,7 @@
   inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  border-radius: 100px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,19 +118,19 @@
 
 /* Front — pill with name */
 .skill-flip__front {
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: var(--accent-dim);
+  border: 2px solid var(--accent-border);
   font-size: 0.78rem;
-  font-weight: 500;
+  font-weight: 800;
   color: var(--accent);
-  letter-spacing: 0.03em;
-  box-shadow: inset 0 1px 0 rgba(245, 158, 11, 0.1);
+  letter-spacing: 0;
+  box-shadow: 3px 3px 0 var(--pixel-shadow-soft);
 }
 
 /* Back — logo or initial, starts face-down */
 .skill-flip__back {
   background: var(--bg-card-hover);
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  border: 2px solid var(--border-accent);
   transform: rotateY(180deg);
   gap: 0.35rem;
 }

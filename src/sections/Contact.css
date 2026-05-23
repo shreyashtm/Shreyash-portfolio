@@ -30,20 +30,21 @@
 .contact__link:hover {
   border-color: var(--accent-border);
   background: var(--bg-card-hover);
-  transform: translateX(4px);
+  transform: translate(4px, 4px);
+  box-shadow: 2px 2px 0 var(--pixel-shadow-soft);
 }
 
 .contact__link-icon {
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-md);
+  border-radius: 0;
   background: var(--accent-dim);
-  border: 1px solid var(--accent-border);
+  border: 2px solid var(--accent-border);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--accent);
   flex-shrink: 0;
 }
@@ -57,8 +58,8 @@
 
 .contact__link-label {
   font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-weight: 800;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -83,14 +84,14 @@
 .contact__footer {
   margin-top: 5rem;
   padding: 1.5rem 0;
-  border-top: 1px solid var(--border);
+  border-top: 3px solid var(--border);
   text-align: center;
 }
 
 .contact__footer span {
   font-size: 0.78rem;
   color: var(--text-muted);
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
 }
 
 @media (max-width: 768px) {

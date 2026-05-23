@@ -26,6 +26,7 @@ export default function Hero({ scrollY, onResumeOpen }) {
 
   const heroHeight = window.innerHeight
   const progress = Math.min(scrollY / (heroHeight * 0.75), 1)
+  const scrollPromptProgress = Math.min(progress / 0.2, 1)
 
   // Name travels to logo position (top:20px left:32px is where ST sits)
   const targetTop = 20
@@ -46,6 +47,12 @@ export default function Hero({ scrollY, onResumeOpen }) {
     margin: 0,
   } : {}
 
+  const scrollPromptStyle = {
+    opacity: 1 - scrollPromptProgress,
+    transform: `translateX(-50%) translateY(${scrollPromptProgress * 18}px)`,
+    pointerEvents: scrollPromptProgress < 0.75 ? 'auto' : 'none',
+  }
+
   // Background elements recede into the page
   const recedingStyle = (delay = 0) => {
   const p = Math.max(0, Math.min((progress - delay) / (1 - delay), 1))
@@ -62,10 +69,6 @@ export default function Hero({ scrollY, onResumeOpen }) {
 
   return (
     <section id="hero" className="hero">
-      <div className="hero__grid" aria-hidden="true" />
-      <div className="hero__glow hero__glow--1" aria-hidden="true" />
-      <div className="hero__glow hero__glow--2" aria-hidden="true" />
-
       <div className="container hero__inner">
         <div className="hero__content">
 
@@ -143,7 +146,12 @@ export default function Hero({ scrollY, onResumeOpen }) {
         </h1>
       )}
 
-      <a href="#about" className="hero__scroll" aria-label="Scroll down">
+      <a
+        href="#about"
+        className="hero__scroll"
+        style={scrollPromptStyle}
+        aria-label="Scroll down"
+      >
         <span className="hero__scroll-line" />
         <span className="hero__scroll-text">scroll</span>
       </a>

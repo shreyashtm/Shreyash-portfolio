@@ -10,9 +10,10 @@
 
 .navbar--scrolled {
   background: var(--navbar-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 3px solid var(--accent);
+  box-shadow: 0 5px 0 var(--pixel-shadow-soft);
   padding: 0.75rem 2rem;
 }
 
@@ -30,12 +31,14 @@
   font-size: 1.1rem;
   font-weight: 850;
   color: var(--accent);
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 2px;
   transition: opacity var(--transition);
+  text-shadow:
+    var(--heading-shadow);
 }
 
 .navbar__logo-bracket {
@@ -59,10 +62,10 @@
 /* Sliding active pill */
 .navbar__pill {
   position: absolute;
-  bottom: -4px;
-  height: 1.5px;
-  background: var(--accent);
-  border-radius: 2px;
+  bottom: -6px;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--accent) 0 8px, var(--accent-hover) 8px 16px);
+  border-radius: 0;
   opacity: 0;
   transition:
     left   0.35s cubic-bezier(0.4, 0, 0.2, 1),
@@ -90,18 +93,20 @@
   text-decoration: none;
   transition: background var(--transition);
   position: relative;
+  border: 1px solid transparent;
 }
 
 .navbar__link:hover {
   background: var(--accent-dim);
+  border-color: var(--accent-border);
 }
 
 /* Small numbered index above the label */
 .navbar__link-index {
   font-family: var(--font-body);
   font-size: 0.58rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-weight: 800;
+  letter-spacing: 0;
   color: var(--text-muted);
   line-height: 1;
   margin-bottom: 2px;
@@ -110,12 +115,13 @@
 
 .navbar__link-label {
   font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 0.82rem;
+  font-weight: 800;
   color: var(--text-secondary);
-  letter-spacing: 0.03em;
+  letter-spacing: 0;
   line-height: 1;
   transition: color var(--transition);
+  text-transform: uppercase;
 }
 
 .navbar__link:hover .navbar__link-index,
@@ -129,7 +135,8 @@
 
 .navbar__link--active .navbar__link-label {
   color: var(--text-primary);
-  font-weight: 500;
+  font-weight: 800;
+  text-shadow: var(--heading-shadow);
 }
 
 /* ── Burger ── */
@@ -146,10 +153,11 @@
 .navbar__burger span {
   display: block;
   width: 22px;
-  height: 1.5px;
-  background: var(--text-secondary);
-  border-radius: 2px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 0;
   transition: all var(--transition);
+  box-shadow: 2px 2px 0 var(--pixel-shadow-soft);
 }
 
 .navbar__burger--open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -172,11 +180,11 @@
     flex-direction: column;
     align-items: flex-start;
     background: var(--navbar-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 1rem 2rem 1.5rem;
     gap: 0.25rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 3px solid var(--accent);
   }
 
   .navbar__links--open { display: flex; }
