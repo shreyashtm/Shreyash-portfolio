@@ -1,95 +1,112 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './Navbar.css';
+import { useEffect, useRef, useState } from 'react'
+import './Navbar.css'
 
 const NAV_LINKS = [
-  { label: 'About',      href: '#about',      index: '01' },
-  { label: 'Skills',     href: '#skills',     index: '02' },
-  { label: 'Experience', href: '#experience', index: '03' },
-  { label: 'Projects',   href: '#projects',   index: '04' },
-  { label: 'Contact',    href: '#contact',    index: '05' },
-];
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
+]
 
-export default function Navbar({ scrollY }) {
-  const [menuOpen, setMenuOpen]     = useState(false);
-  const [active, setActive]         = useState('');
-  const [pillStyle, setPillStyle]   = useState({});
-  const linksRef                    = useRef({});
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [active, setActive] = useState('#hero')
+  const [scrolled, setScrolled] = useState(false)
+  const scrolledRef = useRef(false)
 
-  const heroHeight  = typeof window !== 'undefined' ? window.innerHeight : 800;
-  const progress    = Math.min(scrollY / (heroHeight * 0.25), 1);
-  const logoOpacity = progress >= 1 ? 1 : 0;
-  const scrolled    = scrollY > 40;
-
-  // Track active section via IntersectionObserver
   useEffect(() => {
-    const sections = NAV_LINKS.map(l => document.querySelector(l.href));
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setActive('#' + entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-40% 0px -55% 0px' }
-    );
-    sections.forEach(s => s && observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
+    let frameId
 
-  // Move the pill to sit under the active link
-  useEffect(() => {
-    const el = linksRef.current[active];
-    if (el) {
-      const { offsetLeft, offsetWidth } = el;
-      setPillStyle({ left: offsetLeft, width: offsetWidth, opacity: 1 });
+    const handleScroll = () => {
+      if (frameId) return
+
+      frameId = requestAnimationFrame(() => {
+        const nextScrolled = window.scrollY > 24
+        if (nextScrolled !== scrolledRef.current) {
+          scrolledRef.current = nextScrolled
+          setScrolled(nextScrolled)
+        }
+        frameId = null
+      })
     }
-  }, [active]);
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
+  useEffect(() => {
+    const sections = ['#hero', ...NAV_LINKS.map((link) => link.href)]
+      .map((href) => document.querySelector(href))
+      .filter(Boolean)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+        if (visible) setActive(`#${visible.target.id}`)
+      },
+      { rootMargin: '-34% 0px -58% 0px', threshold: [0.08, 0.2, 0.5] }
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
+  const closeMenu = () => setMenuOpen(false)
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__inner">
-
-        {/* Logo */}
-        <a
-          href="#hero"
-          className="navbar__logo"
-          style={{ opacity: logoOpacity, transition: 'opacity 0.4s ease' }}
-        >
-          <span className="navbar__logo-bracket">[</span>
-          ST
-          <span className="navbar__logo-bracket">]</span>
+        <a className="navbar__logo" href="#hero" onClick={closeMenu} aria-label="Go to hero">
+          <span className="navbar__mark">ST</span>
+          <span className="navbar__identity">
+            <span>Shreyash</span>
+            <span>Data Systems</span>
+          </span>
         </a>
 
-        {/* Desktop links */}
-        <div className="navbar__links-wrap">
-          <ul className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
-            {NAV_LINKS.map(({ label, href, index }) => (
-              <li key={label}>
+        <div className={`navbar__panel ${menuOpen ? 'navbar__panel--open' : ''}`}>
+          <ul className="navbar__links">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
                 <a
-                  href={href}
-                  className={`navbar__link ${active === href ? 'navbar__link--active' : ''}`}
-                  ref={el => { linksRef.current[href] = el; }}
-                  onClick={() => setMenuOpen(false)}
+                  href={link.href}
+                  className={`navbar__link ${active === link.href ? 'navbar__link--active' : ''}`}
+                  onClick={closeMenu}
                 >
-                  <span className="navbar__link-index">{index}</span>
-                  <span className="navbar__link-label">{label}</span>
+                  {link.label}
                 </a>
               </li>
             ))}
           </ul>
-          {/* Sliding pill indicator — desktop only */}
-          <span className="navbar__pill" style={pillStyle} aria-hidden="true" />
         </div>
 
         <button
-          className={`navbar__burger ${menuOpen ? 'navbar__burger--open' : ''}`}
-          onClick={() => setMenuOpen(v => !v)}
-          aria-label="Toggle menu"
+          className={`navbar__toggle ${menuOpen ? 'navbar__toggle--open' : ''}`}
+          type="button"
+          onClick={() => setMenuOpen((value) => !value)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
         >
-          <span /><span /><span />
+          <span />
+          <span />
         </button>
       </div>
     </nav>
-  );
+  )
 }

@@ -1,157 +1,104 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef } from 'react'
+import { FiArrowUpRight, FiDownload, FiMail } from 'react-icons/fi'
+import useHeroAnimation from '../hooks/useHeroAnimation'
+import useMagnetic from '../hooks/useMagnetic'
 import './Hero.css'
-import photo from '../assets/photo.jpg'
+import photo from '../assets/photo-optimized.jpg'
 
-export default function Hero({ scrollY, onResumeOpen }) {
-  const nameRef = useRef(null)
-  const [namePos, setNamePos] = useState(null)
+const metrics = [
+  { value: '4+', label: 'Years building production data systems' },
+  { value: '100k+', label: 'Daily operational records analyzed' },
+  { value: '30%', label: 'Manual reporting effort reduced' },
+]
 
-  // Measure where the name sits on screen on load
-  useEffect(() => {
-    const measure = () => {
-      if (nameRef.current) {
-        const rect = nameRef.current.getBoundingClientRect()
-        setNamePos({
-          top: rect.top + window.scrollY,
-          left: rect.left,
-          width: rect.width,
-          height: rect.height,
-        })
-      }
-    }
-    measure()
-    window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
-  }, [])
+const chartBars = [44, 58, 52, 72, 66, 84, 78, 92]
 
-  const heroHeight = window.innerHeight
-  const progress = Math.min(scrollY / (heroHeight * 0.75), 1)
-  const scrollPromptProgress = Math.min(progress / 0.2, 1)
+export default function Hero({ onResumeOpen }) {
+  const scopeRef = useRef(null)
+  const magneticRef = useMagnetic(0.32)
 
-  // Name travels to logo position (top:20px left:32px is where ST sits)
-  const targetTop = 20
-  const targetLeft = 32
-  const targetScale = 0.08  // how small the name shrinks to fit "ST" size
-
-  const nameStyle = namePos ? {
-    position: 'fixed',
-    top: namePos.top - scrollY + (targetTop - (namePos.top - scrollY)) * progress,
-    left: namePos.left + (targetLeft - namePos.left) * progress,
-    width: namePos.width,
-    transformOrigin: 'top left',
-    transform: `scale(${1 - (1 - targetScale) * progress})`,
-    opacity: progress < 0.85 ? 1 : 1 - ((progress - 0.85) / 0.15),
-    pointerEvents: 'none',
-    zIndex: 99,
-    lineHeight: 1.05,
-    margin: 0,
-  } : {}
-
-  const scrollPromptStyle = {
-    opacity: 1 - scrollPromptProgress,
-    transform: `translateX(-50%) translateY(${scrollPromptProgress * 18}px)`,
-    pointerEvents: scrollPromptProgress < 0.75 ? 'auto' : 'none',
-  }
-
-  // Background elements recede into the page
-  const recedingStyle = (delay = 0) => {
-  const p = Math.max(0, Math.min((progress - delay) / (1 - delay), 1))
-  // ease-out so motion is snappy early and eases off
-  const eased = 1 - Math.pow(1 - p, 2)
-  return {
-    opacity: Math.max(0, 1 - eased * 1.6),
-    transform: `translateY(${eased * 60}px) scale(${1 - eased * 0.1}) translateZ(0)`,
-    transformOrigin: 'center top',
-    transition: 'none',
-    willChange: 'transform, opacity',
-  }
-}
+  useHeroAnimation(scopeRef)
 
   return (
-    <section id="hero" className="hero">
+    <section id="hero" className="hero" ref={scopeRef}>
       <div className="container hero__inner">
         <div className="hero__content">
-
-          <span
-            className="hero__eyebrow"
-            style={recedingStyle(0)}
-          >
-            Software Engineer · Data & Analytics
+          <span className="hero__eyebrow" data-hero="eyebrow">
+            Software Engineer · Data Products · Forecasting
           </span>
 
-          {/* This is the visible name that stays in flow */}
-          <h1
-            className="hero__name"
-            ref={nameRef}
-            style={{ opacity: 0, pointerEvents: 'none' }}
-          >
-            Shreyash<br />
-            <span className="hero__name--accent">Tembhurne</span>
+          <h1 className="hero__title" data-hero="title">
+            Shreyash Tembhurne
           </h1>
 
-          <p className="hero__tagline" style={recedingStyle(0)}>
-            I build data systems that turn raw operational data into decisions —
-            forecasting models, BI dashboards, and analytics pipelines
-            that have shipped in production at scale.
+          <p className="hero__lead" data-hero="lead">
+            I design data systems that turn operational noise into clear decisions:
+            forecasting models, BI dashboards, and analytics pipelines that ship
+            into production.
           </p>
 
-          <div className="hero__cta" style={recedingStyle(0.05)}>
-            <a href="#projects" className="btn btn-primary">View Projects</a>
-            <a href="#contact"  className="btn btn-outline">Contact Me</a>
-            {/* <button
-              className="btn btn-outline"
-              onClick={onResumeOpen}
-            >
-              Resume ↓
-            </button> */}
+          <div className="hero__actions" data-hero="actions">
+            <span className="btn-magnetic" ref={magneticRef}>
+              <a href="#projects" className="btn btn-primary">
+                View case studies
+                <FiArrowUpRight aria-hidden="true" />
+              </a>
+            </span>
+            <button type="button" className="btn btn-outline" onClick={onResumeOpen}>
+              Resume
+              <FiDownload aria-hidden="true" />
+            </button>
+            <a href="mailto:shreyash13.tm@gmail.com" className="btn btn-outline">
+              Contact
+              <FiMail aria-hidden="true" />
+            </a>
           </div>
 
-          <div className="hero__stats" style={recedingStyle(0.1)}>
-            <div className="hero__stat">
-              <span className="hero__stat-number">4+</span>
-              <span className="hero__stat-label">Years Experience</span>
-            </div>
-            <div className="hero__stat-divider" />
-            <div className="hero__stat">
-              <span className="hero__stat-number">30%</span>
-              <span className="hero__stat-label">Reporting Effort Reduced</span>
-            </div>
-            <div className="hero__stat-divider" />
-            <div className="hero__stat">
-              <span className="hero__stat-number">15%</span>
-              <span className="hero__stat-label">Forecast Accuracy Gained</span>
-            </div>
+          <div className="hero__metrics">
+            {metrics.map((metric, index) => (
+              <div className="hero__metric" key={metric.label} data-hero="metric">
+                <span data-hero-metric-value={index}>0</span>
+                <p>{metric.label}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="hero__photo-wrap" style={recedingStyle(0.05)}>
-          <div className="hero__photo-placeholder">
-            <img
-              src={photo}
-              alt="Shreyash Tembhurne"
-              className="hero__photo"
-            />
+        <aside className="hero__visual" data-hero="visual">
+          <div className="hero__portrait-card">
+            <img src={photo} alt="Shreyash Tembhurne" className="hero__photo" />
+            <div className="hero__status">
+              <span />
+              Open to data engineering and analytics roles
+            </div>
           </div>
-          <div className="hero__photo-ring" />
-        </div>
+
+          <div className="hero__signal-card">
+            <div className="hero__signal-topline">
+              <span>Forecast accuracy</span>
+              <strong>+15%</strong>
+            </div>
+            <div className="hero__mini-chart" aria-hidden="true">
+              {chartBars.map((height, index) => (
+                <span
+                  key={index}
+                  style={{
+                    height: `${height}%`,
+                  }}
+                />
+              ))}
+            </div>
+            <div className="hero__signal-footer">
+              <span>ARIMA + LSTM</span>
+              <span>production</span>
+            </div>
+          </div>
+        </aside>
       </div>
 
-      {/* The animated name — rendered on top of everything, travels to logo */}
-      {namePos && (
-        <h1 className="hero__name hero__name--floating" style={nameStyle}>
-          Shreyash<br />
-          <span className="hero__name--accent">Tembhurne</span>
-        </h1>
-      )}
-
-      <a
-        href="#about"
-        className="hero__scroll"
-        style={scrollPromptStyle}
-        aria-label="Scroll down"
-      >
-        <span className="hero__scroll-line" />
-        <span className="hero__scroll-text">scroll</span>
+      <a href="#about" className="hero__scroll-cue" aria-label="Scroll to about">
+        <span />
+        Scroll
       </a>
     </section>
   )

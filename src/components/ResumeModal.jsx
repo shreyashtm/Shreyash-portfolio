@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
+import { FiDownload, FiX } from 'react-icons/fi'
 import './ResumeModal.css'
 
 export default function ResumeModal({ isOpen, onClose }) {
   const [visible, setVisible] = useState(false)
 
-  // Delay applying visible class by one frame so CSS transition fires
   useEffect(() => {
     if (isOpen) {
       requestAnimationFrame(() => {
@@ -12,13 +12,9 @@ export default function ResumeModal({ isOpen, onClose }) {
       })
     } else {
       setVisible(false)
-    // Keep mounted until exit transition finishes
-    const timer = setTimeout(() => setMounted(false), 600)
-    return () => clearTimeout(timer)
     }
   }, [isOpen])
 
-  // Close on Escape
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'Escape') onClose()
@@ -37,22 +33,29 @@ export default function ResumeModal({ isOpen, onClose }) {
     <div
       className={`modal-overlay ${visible ? 'modal-overlay--open' : ''}`}
       onClick={onClose}
+      aria-hidden={!isOpen}
     >
       <div
         className={`modal ${visible ? 'modal--open' : ''}`}
         onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Resume preview"
       >
         <div className="modal__header">
-          <span className="modal__title">Shreyash Tembhurne — Resume</span>
+          <span className="modal__title">Shreyash Tembhurne Resume</span>
           <div className="modal__actions">
             <a
               href="/ShreyashTembhurneResume.pdf"
               download
               className="btn btn-primary modal__download"
             >
-              Download ↓
+              Download
+              <FiDownload aria-hidden="true" />
             </a>
-            <button className="modal__close" onClick={onClose}>✕</button>
+            <button className="modal__close" onClick={onClose} aria-label="Close resume preview">
+              <FiX aria-hidden="true" />
+            </button>
           </div>
         </div>
 
