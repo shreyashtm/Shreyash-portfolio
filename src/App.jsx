@@ -17,13 +17,19 @@ export default function App() {
   const [resumeOpen, setResumeOpen] = useState(false)
 
   useLayoutEffect(() => {
-    const scroll = initSmoothScroll()
+    // Safe initialization check to prevent crashes if the lib file is missing
+    if (typeof initSmoothScroll === 'function') {
+      const scroll = initSmoothScroll()
 
-    requestAnimationFrame(() => {
-      ScrollTrigger.refresh()
-    })
+      // Defer refresh to ensure DOM is fully hydrated and dimensions are accurate
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh()
+        })
+      })
 
-    return () => scroll.destroy()
+      return () => scroll.destroy()
+    }
   }, [])
 
   useRevealAnimations()

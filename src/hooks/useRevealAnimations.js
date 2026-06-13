@@ -1,9 +1,9 @@
 import { useLayoutEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { prefersReducedMotion } from '../lib/motion'
 
-gsap.registerPlugin(ScrollTrigger)
+// Direct fallback to prevent crashes if src/lib/motion.js is missing
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export default function useRevealAnimations() {
   useLayoutEffect(() => {
