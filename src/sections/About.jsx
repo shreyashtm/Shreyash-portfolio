@@ -1,84 +1,79 @@
 import { FiArrowUpRight } from 'react-icons/fi'
-import SectionHeader from '../components/SectionHeader'
 import './About.css'
 
-const highlights = [
-  { number: '4+', label: 'Years working across data engineering and analytics' },
-  { number: '100k+', label: 'Daily records processed from operational systems' },
-  { number: '6-8', label: 'Production Tableau dashboards deployed' },
-  { number: '2', label: 'Forecasting models shipped into production' },
+const metrics = [
+  { value: '4+', label: 'Years at Siemens Smart Infrastructure' },
+  { value: '8', label: 'Distinct analytical scopes owned end-to-end' },
+  { value: '100k+', label: 'Daily BMS sensor records processed' },
+  { value: '2', label: 'Forecasting models shipped to production' },
 ]
 
 export default function About() {
   return (
     <section id="about" className="about">
       <div className="container">
-        <SectionHeader
-          label="About"
-          title="I build the analytics layer between"
-          accent="operations and decisions"
-        />
+        <span className="section-label" data-reveal>About</span>
+        <h2 className="about__statement" data-reveal>
+          I build the analytics layer between operations
+          and <span className="serif gradient-text">decisions</span>
+        </h2>
 
-        <div className="about__grid">
-          <div className="about__copy" data-reveal>
-            <p>
-              I am a Software Engineer with a focus on production data systems,
-              forecasting, and business intelligence. At Siemens, I work with
-              large operational datasets from electricity consumption systems,
-              building the pipelines, models, and dashboards teams rely on every
-              day.
-            </p>
-            <p>
-              My work sits close to the business problem: define the metric,
-              prepare the data, validate the model, build the dashboard, and
-              communicate the tradeoffs clearly enough for a stakeholder to act.
-            </p>
-            <p>
-              I am especially interested in data roles where engineering quality
-              and analytical judgment meet: demand forecasting, pricing systems,
-              data product development, and decision intelligence.
-            </p>
-
-            <div className="about__links">
-              <a href="https://github.com/shreyashtm" target="_blank" rel="noreferrer" className="btn btn-outline">
-                GitHub
-                <FiArrowUpRight aria-hidden="true" />
-              </a>
-              <a href="https://www.linkedin.com/in/shreyash-tembhurne/" target="_blank" rel="noreferrer" className="btn btn-outline">
-                LinkedIn
-                <FiArrowUpRight aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-
-          <div className="about__panel card" data-reveal data-reveal-delay="0.1">
-            <span className="about__panel-label">Current focus</span>
-            <h3>Data products that earn trust in production.</h3>
-            <p>
-              Reliable inputs, transparent modeling, dashboard ergonomics, and
-              metrics that do not collapse under scrutiny.
-            </p>
-            <div className="about__focus-list">
-              <span>Forecasting</span>
-              <span>BI systems</span>
-              <span>Data quality</span>
-              <span>Stakeholder analytics</span>
-            </div>
-          </div>
+        <div className="about__body" data-reveal>
+          <p>
+            Over four years at Siemens Smart Infrastructure, I've built the
+            data systems that make building-automation analytics reliable — from
+            unifying multi-source BMS sensor data into production pipelines, to
+            forecasting models and dashboards that teams rely on daily. Over
+            time, I became the informal resolution point across data quality,
+            forecast interpretation, and metric definitions — not because of a
+            title, but because I'd built all three layers and knew where each
+            could break.
+          </p>
+          <p>
+            My work spans eight distinct analytical scopes — energy load
+            forecasting, predictive maintenance, anomaly detection, data
+            unification, occupancy analytics, device optimization, strategic
+            dashboards, and dual-audience BI — each a widening of what I owned,
+            from writing reliable code to deciding what the organisation pays
+            attention to.
+          </p>
+          <p>
+            I'm looking for roles where that end-to-end ownership — pipeline to
+            dashboard to stakeholder decision — can operate at a larger scale.
+          </p>
         </div>
 
-        <div className="about__highlights">
-          {highlights.map((highlight, index) => (
+        <div className="about__metrics">
+          {metrics.map((m, i) => (
             <div
-              className="about__highlight"
-              key={highlight.label}
+              className="about__metric"
+              key={m.label}
               data-reveal
-              data-reveal-delay={String(index * 0.05)}
+              data-reveal-delay={String(i * 0.06)}
             >
-              <span>{highlight.number}</span>
-              <p>{highlight.label}</p>
+              <span className="about__metric-value">{m.value}</span>
+              <p>{m.label}</p>
             </div>
           ))}
+        </div>
+
+        <div className="about__links" data-reveal>
+          <a
+            href="https://github.com/shreyashtm"
+            target="_blank"
+            rel="noreferrer"
+            className="btn"
+          >
+            GitHub <FiArrowUpRight aria-hidden="true" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/shreyash-tembhurne/"
+            target="_blank"
+            rel="noreferrer"
+            className="btn"
+          >
+            LinkedIn <FiArrowUpRight aria-hidden="true" />
+          </a>
         </div>
       </div>
     </section>

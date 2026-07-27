@@ -1,0 +1,109 @@
+.cyber-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 5px),
+    radial-gradient(circle at 50% 42%, rgba(114, 215, 189, 0.2), transparent 18rem),
+    #050709;
+  color: #f6f0e7;
+  pointer-events: none;
+}
+
+.cyber-boot::before,
+.cyber-boot::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.cyber-boot::before {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 39, 170, 0.18), transparent),
+    linear-gradient(180deg, transparent 0 48%, rgba(114, 215, 189, 0.18) 49%, transparent 51% 100%);
+  animation: boot-glitch 0.24s steps(2, end) infinite;
+  mix-blend-mode: screen;
+}
+
+.cyber-boot::after {
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.68) 100%);
+}
+
+.cyber-boot--exit {
+  opacity: 0;
+  transform: scale(1.02);
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-boot__frame {
+  position: relative;
+  z-index: 1;
+  width: min(520px, calc(100% - 48px));
+  padding: 1.25rem;
+  border: 1px solid rgba(114, 215, 189, 0.46);
+  background: rgba(5, 7, 9, 0.64);
+  box-shadow:
+    0 0 0 1px rgba(255, 39, 170, 0.24),
+    0 0 48px rgba(114, 215, 189, 0.18);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.cyber-boot__kicker,
+.cyber-boot__frame em {
+  display: block;
+  color: rgba(246, 240, 231, 0.62);
+  font-size: 0.7rem;
+  font-style: normal;
+}
+
+.cyber-boot__frame strong {
+  display: block;
+  margin: 0.65rem 0 1rem;
+  color: #bff3df;
+  font-size: clamp(1.8rem, 8vw, 4.2rem);
+  line-height: 0.9;
+  text-shadow:
+    2px 0 rgba(255, 39, 170, 0.82),
+    -2px 0 rgba(114, 215, 189, 0.82);
+}
+
+.cyber-boot__bar {
+  height: 8px;
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+  border: 1px solid rgba(114, 215, 189, 0.42);
+  background: rgba(246, 240, 231, 0.08);
+}
+
+.cyber-boot__bar span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff27aa, #72d7bd, #f7ff6b);
+  transform-origin: left center;
+  animation: boot-load 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes boot-load {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes boot-glitch {
+  0% { transform: translate3d(0, -18%, 0); opacity: 0.28; }
+  50% { transform: translate3d(0, 24%, 0); opacity: 0.08; }
+  100% { transform: translate3d(0, -6%, 0); opacity: 0.22; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cyber-boot {
+    display: none;
+  }
+}

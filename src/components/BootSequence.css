@@ -1,0 +1,42 @@
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.boot__progress {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.boot__bar-track {
+  width: 120px;
+  height: 1px;
+  background: color-mix(in srgb, var(--white) 6%, transparent);
+  overflow: hidden;
+}
+
+.boot__bar-fill {
+  width: 100%;
+  height: 100%;
+  background: var(--gradient);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.boot__counter {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}

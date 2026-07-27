@@ -1,25 +1,53 @@
-import SectionHeader from '../components/SectionHeader'
+import { useState } from 'react'
 import './Experience.css'
+
+const CAREER_ARC = [
+  {
+    period: 'Year 1–2',
+    phase: 'Execution',
+    description:
+      'Unified multi-vendor BMS sensor data (BACnet/Modbus) into a single analytics schema, and built the first energy load forecasting model on top of it.',
+  },
+  {
+    period: 'Year 2–3',
+    phase: 'Ownership',
+    description:
+      'Anomaly detection on live sensor streams and predictive maintenance scoring — deciding what counts as "real" versus noise. Colleagues started checking with me before escalating.',
+  },
+  {
+    period: 'Year 3–4',
+    phase: 'Translation',
+    description:
+      'Diagnosed control-loop inefficiencies for commissioning engineers and built comfort/occupancy analytics for facility managers. People came to me to interpret, not just compute.',
+  },
+  {
+    period: 'Year 4',
+    phase: 'Influence',
+    description:
+      'Strategic fleet dashboards for product and roadmap decisions. Dual-audience BI serving both facility ops and internal stakeholders from one unified data layer.',
+  },
+]
 
 const EXPERIENCE = [
   {
     company: 'Siemens Technology and Services',
     role: 'Software Engineer',
-    period: 'May 2022 - Present',
+    period: 'May 2022 — Present',
     current: true,
     summary:
-      'Building production analytics systems for electricity consumption operations, from data preparation and forecasting to dashboards used by business teams.',
-    impact: ['100k+ daily records', '15% forecast accuracy gain', '30% reporting effort reduced'],
+      'Building production data systems across the Smart Infrastructure Building Automation stack — from multi-source sensor data pipelines and forecasting models to strategic dashboards for leadership.',
+    impact: ['8 analytical scopes', '100k+ daily records', '4-year progression'],
     bullets: [
-      'Designed and deployed 6-8 production Tableau dashboards for operational KPIs, consumption trends, and anomaly monitoring.',
-      'Developed ARIMA and LSTM forecasting models for electricity consumption, including rolling-window validation and stakeholder-facing reliability communication.',
-      'Established data quality checks and validation protocols before downstream analytics and reporting workflows.',
+      'Unified multi-vendor BMS sensor data into a single analytics-ready schema for downstream forecasting, anomaly detection, and reporting.',
+      'Built and deployed ARIMA and LSTM forecasting models for energy load prediction, including rolling-window validation and stakeholder-facing reliability communication.',
+      'Designed strategic fleet dashboards and dual-audience BI systems serving both facility operations and internal product stakeholders.',
     ],
+    arc: CAREER_ARC,
   },
   {
     company: 'Zappkode Solutions',
     role: 'Python Developer',
-    period: 'Feb 2021 - Jun 2021',
+    period: 'Feb 2021 — Jun 2021',
     current: false,
     summary:
       'Built data processing and analytics modules for Project Greenbill, a retail billing platform for grocery stores, petrol pumps, and retail chains.',
@@ -33,45 +61,83 @@ const EXPERIENCE = [
 ]
 
 export default function Experience() {
+  const [arcOpen, setArcOpen] = useState(false)
+
   return (
     <section id="experience" className="experience">
       <div className="container">
-        <SectionHeader label="Experience" title="Production work with" accent="measurable outcomes" />
+        <span className="section-label" data-reveal>Experience</span>
+        <h2 className="section-title" data-reveal>
+          Where the work <span className="serif gradient-text">shipped</span>
+        </h2>
 
         <div className="experience__list">
-          {EXPERIENCE.map((job, index) => (
+          {EXPERIENCE.map((job, i) => (
             <article
-              className="experience__item"
+              className={`experience__card card ${job.current ? 'experience__card--current' : ''}`}
               key={job.company}
               data-reveal
-              data-reveal-delay={String(index * 0.08)}
+              data-reveal-delay={String(i * 0.08)}
             >
-              <div className="experience__meta">
-                <span>{job.period}</span>
-                {job.current && <span className="tag">Current</span>}
+              <div className="experience__top">
+                <div>
+                  <h3>{job.role}</h3>
+                  <p className="experience__company">{job.company}</p>
+                </div>
+                <span className="experience__period">{job.period}</span>
               </div>
 
-              <div className="experience__body card">
-                <div className="experience__header">
-                  <div>
-                    <h3>{job.role}</h3>
-                    <p>{job.company}</p>
+              <p className="experience__summary">{job.summary}</p>
+
+              <div className="experience__impact">
+                {job.impact.map((item) => (
+                  <span className="tag" key={item}>{item}</span>
+                ))}
+              </div>
+
+              <ul className="experience__bullets">
+                {job.bullets.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
+
+              {job.arc && (
+                <div
+                  className={`experience__arc ${arcOpen ? 'experience__arc--open' : ''}`}
+                  onClick={() => { if (window.innerWidth <= 768) setArcOpen((v) => !v) }}
+                >
+                  <div className="experience__arc-toggle">
+                    <span className="experience__arc-label">Career Progression</span>
+                    <span className="experience__arc-summary">
+                      {job.arc.map((b, j) => (
+                        <span key={b.phase}>
+                          {b.phase}{j < job.arc.length - 1 ? ' → ' : ''}
+                        </span>
+                      ))}
+                    </span>
+                    <span className="experience__arc-chevron">↓</span>
                   </div>
-                  <div className="experience__impact">
-                    {job.impact.map((item) => (
-                      <span key={item}>{item}</span>
+                  <div className="experience__arc-collapse">
+                  <div className="experience__arc-timeline">
+                    {job.arc.map((block, j) => (
+                      <div className="experience__arc-block" key={block.phase}>
+                        <div className="experience__arc-marker">
+                          <span className="experience__arc-dot" />
+                          {j < job.arc.length - 1 && <span className="experience__arc-line" />}
+                        </div>
+                        <div className="experience__arc-body">
+                          <div className="experience__arc-header">
+                            <span className="experience__arc-period">{block.period}</span>
+                            <span className="experience__arc-phase">{block.phase}</span>
+                          </div>
+                          <p className="experience__arc-desc">{block.description}</p>
+                        </div>
+                      </div>
                     ))}
                   </div>
+                  </div>
                 </div>
-
-                <p className="experience__summary">{job.summary}</p>
-
-                <ul className="experience__bullets">
-                  {job.bullets.map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
-                  ))}
-                </ul>
-              </div>
+              )}
             </article>
           ))}
         </div>

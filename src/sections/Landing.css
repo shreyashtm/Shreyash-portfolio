@@ -1,0 +1,129 @@
+.landing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0 0 80px;
+}
+
+.landing__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.landing__name {
+  line-height: 0.88;
+  margin-bottom: 20px;
+}
+
+.landing__first {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+.landing__last {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.landing__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.landing__meta-sep {
+  opacity: 0.3;
+}
+
+.landing__scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 1;
+}
+
+.landing__scroll span:last-child {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.landing__scroll-line {
+  display: block;
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--text-dim), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.landing__tagline {
+  max-width: 580px;
+  margin-top: 28px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .landing {
+    padding-bottom: 100px;
+    overflow-x: hidden;
+  }
+
+  .landing__name {
+    font-size: clamp(32px, 9vw, 56px);
+    word-break: break-word;
+  }
+
+  .landing__meta {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+  }
+
+  .landing__tagline {
+    font-size: 13px;
+  }
+
+  .landing__scroll {
+    bottom: 28px;
+  }
+}
+
+@media (max-width: 430px) {
+  .landing__name {
+    font-size: clamp(28px, 8.5vw, 40px);
+  }
+}

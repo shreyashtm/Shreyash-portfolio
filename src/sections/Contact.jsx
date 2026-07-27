@@ -1,5 +1,4 @@
-import { FiArrowUpRight, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
-import SectionHeader from '../components/SectionHeader'
+import { FiArrowUpRight } from 'react-icons/fi'
 import './Contact.css'
 
 const links = [
@@ -7,19 +6,16 @@ const links = [
     href: 'mailto:shreyash13.tm@gmail.com',
     label: 'Email',
     value: 'shreyash13.tm@gmail.com',
-    icon: FiMail,
   },
   {
     href: 'https://www.linkedin.com/in/shreyash-tembhurne/',
     label: 'LinkedIn',
     value: 'shreyash-tembhurne',
-    icon: FiLinkedin,
   },
   {
     href: 'https://github.com/shreyashtm',
     label: 'GitHub',
     value: 'shreyashtm',
-    icon: FiGithub,
   },
 ]
 
@@ -27,34 +23,33 @@ export default function Contact() {
   return (
     <section id="contact" className="contact">
       <div className="container">
-        <SectionHeader label="Contact" title="Let’s build something" accent="useful" />
+        <span className="section-label" data-reveal>Contact</span>
+        <h2 className="contact__title" data-reveal>
+          Let's build something{' '}
+          <span className="serif gradient-text">together</span>
+        </h2>
 
-        <div className="contact__panel card" data-reveal>
-          <div className="contact__copy">
-            <p>
-              I am open to full-time roles and selected freelance work across data
-              engineering, analytics engineering, forecasting, and BI systems.
-            </p>
-            <a href="mailto:shreyash13.tm@gmail.com" className="contact__primary">
-              Start a conversation
+        <p className="contact__desc" data-reveal>
+          I am open to full-time roles and selected freelance work across data
+          engineering, analytics engineering, forecasting, and BI systems.
+        </p>
+
+        <div className="contact__links" data-reveal>
+          {links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className="contact__link"
+            >
+              <div>
+                <span className="contact__link-label">{link.label}</span>
+                <span className="contact__link-value">{link.value}</span>
+              </div>
               <FiArrowUpRight aria-hidden="true" />
             </a>
-          </div>
-
-          <div className="contact__links">
-            {links.map(({ href, label, value, icon: Icon }) => (
-              <a key={href} href={href} target="_blank" rel="noreferrer" className="contact__link">
-                <span className="contact__icon">
-                  <Icon aria-hidden="true" />
-                </span>
-                <span>
-                  <strong>{label}</strong>
-                  <em>{value}</em>
-                </span>
-                <FiArrowUpRight aria-hidden="true" />
-              </a>
-            ))}
-          </div>
+          ))}
         </div>
 
         <footer className="contact__footer">

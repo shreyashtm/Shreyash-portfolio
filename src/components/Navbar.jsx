@@ -3,81 +3,72 @@ import './Navbar.css'
 
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
+  { label: 'Work', href: '#projects' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Education', href: '#education' },
   { label: 'Contact', href: '#contact' },
 ]
 
-export default function Navbar() {
+export default function Navbar({ onResumeOpen, bootComplete }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [active, setActive] = useState('#hero')
+  const [active, setActive] = useState('')
   const [scrolled, setScrolled] = useState(false)
-  const scrolledRef = useRef(false)
+  const [logoVisible, setLogoVisible] = useState(false)
+  const initialized = useRef(false)
 
   useEffect(() => {
-    let frameId
+    const onScroll = () => {
+      setScrolled(window.scrollY > 50)
+      if (window.scrollY < 100) setActive('')
 
-    const handleScroll = () => {
-      if (frameId) return
-
-      frameId = requestAnimationFrame(() => {
-        const nextScrolled = window.scrollY > 24
-        if (nextScrolled !== scrolledRef.current) {
-          scrolledRef.current = nextScrolled
-          setScrolled(nextScrolled)
-        }
-        frameId = null
-      })
+      const landing = document.querySelector('#landing')
+      if (landing) {
+        setLogoVisible(window.scrollY > landing.offsetHeight * 0.6)
+      }
     }
-
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => {
-      if (frameId) cancelAnimationFrame(frameId)
-      window.removeEventListener('scroll', handleScroll)
-    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
-    const sections = ['#hero', ...NAV_LINKS.map((link) => link.href)]
-      .map((href) => document.querySelector(href))
-      .filter(Boolean)
+    initialized.current = bootComplete
+  }, [bootComplete])
+
+  useEffect(() => {
+    const sections = NAV_LINKS.map((l) => document.querySelector(l.href)).filter(Boolean)
 
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
-          .filter((entry) => entry.isIntersecting)
+          .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-
         if (visible) setActive(`#${visible.target.id}`)
       },
-      { rootMargin: '-34% 0px -58% 0px', threshold: [0.08, 0.2, 0.5] }
+      { rootMargin: '-20% 0px -40% 0px', threshold: [0.05, 0.15, 0.4] }
     )
 
-    sections.forEach((section) => observer.observe(section))
+    sections.forEach((s) => observer.observe(s))
     return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
+    return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
   const closeMenu = () => setMenuOpen(false)
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
-      <div className="navbar__inner">
-        <a className="navbar__logo" href="#hero" onClick={closeMenu} aria-label="Go to hero">
-          <span className="navbar__mark">ST</span>
-          <span className="navbar__identity">
-            <span>Shreyash</span>
-            <span>Data Systems</span>
-          </span>
+      <div className="navbar__inner container">
+        <a
+          className={`navbar__logo ${logoVisible ? 'navbar__logo--visible' : ''}`}
+          href="#landing"
+          onClick={closeMenu}
+        >
+          ST.
         </a>
 
         <div className={`navbar__panel ${menuOpen ? 'navbar__panel--open' : ''}`}>
@@ -93,14 +84,26 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
+            {/* <li>
+              <button
+                type="button"
+                className="navbar__link"
+                onClick={() => {
+                  closeMenu()
+                  onResumeOpen?.()
+                }}
+              >
+                Resume
+              </button>
+            </li> */}
           </ul>
         </div>
 
         <button
           className={`navbar__toggle ${menuOpen ? 'navbar__toggle--open' : ''}`}
           type="button"
-          onClick={() => setMenuOpen((value) => !value)}
-          aria-label="Toggle navigation menu"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
           aria-expanded={menuOpen}
         >
           <span />
